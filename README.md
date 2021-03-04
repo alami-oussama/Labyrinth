@@ -5,12 +5,12 @@
 ## Maze generating
 - [x] Generating a random maze rusing **Depth-first search (DFS)** algorithm
 
-![Maze generating](Screenshots/Maze-generating.gif)
+![Maze generating](screenshots/Maze-generating.gif)
 
 ## Maze solving
 - [x] Solving the maze by finding the shortest path using **Breadth-first search (BFS)** algorithm
 
-![Maze sloving](Screenshots/Maze-solving.gif)
+![Maze sloving](screenshots/Maze-solving.gif)
 
 # SDL instalation
 ## Linux instalation
