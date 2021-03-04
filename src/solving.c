@@ -4,7 +4,7 @@
 
 /* Global variables */
 static queue *firstCell;
-Bool adjacencyMatrix[nbOfCells][nbOfCells];
+SDL_bool adjacencyMatrix[nbOfCells][nbOfCells];
 cell *parent[grid_width][grid_height];
 
 void initBFS()
@@ -14,9 +14,9 @@ void initBFS()
         for (int j = 0; j < grid_height; j++)
         {
             parent[i][j] = NULL;
-            visited[i + 1][j + 1] = false;
+            visited[i + 1][j + 1] = SDL_FALSE;
         }
-    visited[1][1] = true;
+    visited[1][1] = SDL_TRUE;
 }
 
 void mazeSolving()
@@ -26,7 +26,7 @@ void mazeSolving()
     Cell->posX = 1;
     Cell->posY = 1;
     enqueue(Cell);
-    while (visited[grid_width][grid_height] == false)
+    while (visited[grid_width][grid_height] == SDL_FALSE)
     {
         cell *Cell = dequeue();
         queueCellNeighbours(Cell);
@@ -52,9 +52,9 @@ void queueCellNeighbours(cell *Cell)
     neighbourCell = Malloc(cell);
     neighbourCell->posX = Cell->posX - 1;
     neighbourCell->posY = Cell->posY;
-    if ((visited[neighbourCell->posX][neighbourCell->posY] == false) && (isAdjacency(Cell, neighbourCell) == true))
+    if ((visited[neighbourCell->posX][neighbourCell->posY] == SDL_FALSE) && (isAdjacency(Cell, neighbourCell) == SDL_TRUE))
     {
-        visited[neighbourCell->posX][neighbourCell->posY] = true;
+        visited[neighbourCell->posX][neighbourCell->posY] = SDL_TRUE;
         parent[neighbourCell->posX - 1][neighbourCell->posY - 1] = Cell;
         enqueue(neighbourCell);
 
@@ -69,9 +69,9 @@ void queueCellNeighbours(cell *Cell)
     neighbourCell = Malloc(cell);
     neighbourCell->posX = Cell->posX;
     neighbourCell->posY = Cell->posY - 1;
-    if ((visited[neighbourCell->posX][neighbourCell->posY] == false) && (isAdjacency(Cell, neighbourCell) == true))
+    if ((visited[neighbourCell->posX][neighbourCell->posY] == SDL_FALSE) && (isAdjacency(Cell, neighbourCell) == SDL_TRUE))
     {
-        visited[neighbourCell->posX][neighbourCell->posY] = true;
+        visited[neighbourCell->posX][neighbourCell->posY] = SDL_TRUE;
         parent[neighbourCell->posX - 1][neighbourCell->posY - 1] = Cell;
         enqueue(neighbourCell);
 
@@ -86,9 +86,9 @@ void queueCellNeighbours(cell *Cell)
     neighbourCell = Malloc(cell);
     neighbourCell->posX = Cell->posX;
     neighbourCell->posY = Cell->posY + 1;
-    if ((visited[neighbourCell->posX][neighbourCell->posY] == false) && (isAdjacency(Cell, neighbourCell) == true))
+    if ((visited[neighbourCell->posX][neighbourCell->posY] == SDL_FALSE) && (isAdjacency(Cell, neighbourCell) == SDL_TRUE))
     {
-        visited[neighbourCell->posX][neighbourCell->posY] = true;
+        visited[neighbourCell->posX][neighbourCell->posY] = SDL_TRUE;
         parent[neighbourCell->posX - 1][neighbourCell->posY - 1] = Cell;
         enqueue(neighbourCell);
 
@@ -103,9 +103,9 @@ void queueCellNeighbours(cell *Cell)
     neighbourCell = Malloc(cell);
     neighbourCell->posX = Cell->posX + 1;
     neighbourCell->posY = Cell->posY;
-    if ((visited[neighbourCell->posX][neighbourCell->posY] == false) && (isAdjacency(Cell, neighbourCell) == true))
+    if ((visited[neighbourCell->posX][neighbourCell->posY] == SDL_FALSE) && (isAdjacency(Cell, neighbourCell) == SDL_TRUE))
     {
-        visited[neighbourCell->posX][neighbourCell->posY] = true;
+        visited[neighbourCell->posX][neighbourCell->posY] = SDL_TRUE;
         parent[neighbourCell->posX - 1][neighbourCell->posY - 1] = Cell;
         enqueue(neighbourCell);
 
@@ -197,11 +197,11 @@ void adjacency(cell *Cell, cell *cellNeighbour)
 {
     int cellPos = (Cell->posX - 1) * grid_height + (Cell->posY - 1);
     int neighbourPos = (cellNeighbour->posX - 1) * grid_height + (cellNeighbour->posY - 1);
-    adjacencyMatrix[cellPos][neighbourPos] = true;
-    adjacencyMatrix[neighbourPos][cellPos] = true;
+    adjacencyMatrix[cellPos][neighbourPos] = SDL_TRUE;
+    adjacencyMatrix[neighbourPos][cellPos] = SDL_TRUE;
 }
 
-Bool isAdjacency(cell *Cell, cell *cellNeighbour)
+SDL_bool isAdjacency(cell *Cell, cell *cellNeighbour)
 {
     int cellPos = (Cell->posX - 1) * grid_height + (Cell->posY - 1);
     int neighbourPos = (cellNeighbour->posX - 1) * grid_height + (cellNeighbour->posY - 1);

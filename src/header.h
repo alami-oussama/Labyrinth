@@ -13,13 +13,6 @@
 #define window_height (grid_height * grid_cell_size) + 1
 #define nbOfCells (grid_width * grid_height)
 
-/* Define boolean type */
-typedef enum
-{
-    false,
-    true
-} Bool;
-
 /* Cell representaion */
 typedef struct
 {
@@ -43,8 +36,8 @@ typedef struct _queue
 
 /* External global variables */
 extern SDL_Renderer *renderer;
-extern Bool visited[grid_width + 2][grid_height + 2];
-extern Bool adjacencyMatrix[nbOfCells][nbOfCells];
+extern SDL_bool visited[grid_width + 2][grid_height + 2];
+extern SDL_bool adjacencyMatrix[nbOfCells][nbOfCells];
 
 /* Prototypes of functions */
 /***** Maze generation *****/
@@ -55,7 +48,7 @@ cell *cellNeighbour(cell *Cell);
 void removeWall(cell *Cell, cell *neighbour);
 /***** Maze solving *****/
 void adjacency(cell *Cell, cell *cellNeighbour);
-Bool isAdjacency(cell *Cell, cell *cellNeighbour);
+SDL_bool isAdjacency(cell *Cell, cell *cellNeighbour);
 void mazeSolving();
 void enqueue(cell *Cell);
 cell *dequeue();

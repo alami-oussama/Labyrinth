@@ -13,15 +13,22 @@ int main(int argc, char *argv[])
     if (SDL_CreateWindowAndRenderer(window_width, window_height, 0, &window, &renderer) != 0)
         exit(EXIT_FAILURE);
 
-    SDL_SetWindowTitle(window, "Maze generator");
+    SDL_SetWindowTitle(window, "Labyrinth");
 
     SDL_bool quit = SDL_FALSE;
+    SDL_bool firstLook = SDL_TRUE;
 
     while (!quit)
     {
         SDL_Event event;
-        while (SDL_PollEvent(&event))
+        if (SDL_PollEvent(&event))
         {
+            if (firstLook)
+            {
+                mazeGeneration();
+                firstLook = SDL_FALSE;
+                continue;
+            }
             switch (event.type)
             {
             case SDL_MOUSEBUTTONDOWN:
