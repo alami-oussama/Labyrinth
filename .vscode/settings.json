@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "sdl.h": "c",
+        "stdlib.h": "c",
+        "limits.h": "c",
+        "iterator": "c",
+        "random": "cpp"
+    },
+    "cmake.configureOnOpen": false
+}
