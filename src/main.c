@@ -6,6 +6,7 @@
 SDL_Renderer *renderer;
 SDL_bool generate;
 SDL_bool solve;
+SDL_bool firstLook;
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
     SDL_bool quit = SDL_FALSE;
     generate = SDL_TRUE;
     solve = SDL_FALSE;
+    firstLook = SDL_TRUE;
 
     initGrid();
     SDL_Thread *thread;
@@ -29,6 +31,11 @@ int main(int argc, char *argv[])
         SDL_Event event;
         while (SDL_WaitEvent(&event) && !quit)
         {
+            if (firstLook)
+            {
+                initGrid();
+                thread = SDL_CreateThread(mazeGeneration, "Generating", NULL);
+            }
             switch (event.type)
             {
             case SDL_MOUSEBUTTONDOWN:

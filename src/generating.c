@@ -32,6 +32,7 @@ void initMaze()
 
 int mazeGeneration(void *ptr)
 {
+    firstLook = SDL_FALSE;
     generate = SDL_FALSE;
     solve = SDL_FALSE;
     initMaze();
