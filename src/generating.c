@@ -6,7 +6,6 @@
 /* Global variables */
 static stack *firstCell;
 SDL_bool visited[grid_width + 2][grid_height + 2];
-SDL_bool solve;
 
 void initMaze()
 {
@@ -33,6 +32,8 @@ void initMaze()
 
 int mazeGeneration(void *ptr)
 {
+    generate = SDL_FALSE;
+    solve = SDL_FALSE;
     initMaze();
 
     cell *Cell = Malloc(cell);
@@ -55,6 +56,7 @@ int mazeGeneration(void *ptr)
         }
     }
     solve = SDL_TRUE;
+    generate = SDL_TRUE;
 }
 
 void push_stack(cell *Cell)

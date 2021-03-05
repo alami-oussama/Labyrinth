@@ -4,6 +4,8 @@
 
 /* Global varibales */
 SDL_Renderer *renderer;
+SDL_bool generate;
+SDL_bool solve;
 
 int main(int argc, char *argv[])
 {
@@ -17,12 +19,11 @@ int main(int argc, char *argv[])
     SDL_SetWindowTitle(window, "Labyrinth");
 
     SDL_bool quit = SDL_FALSE;
-    solve = SDL_FALSE;
     generate = SDL_TRUE;
+    solve = SDL_FALSE;
 
     initGrid();
-    SDL_Thread *generatingThread;
-    SDL_Thread *solvingThread;
+    SDL_Thread *thread;
     while (!quit)
     {
         SDL_Event event;
@@ -37,14 +38,12 @@ int main(int argc, char *argv[])
                     if (generate)
                     {
                         initGrid();
-                        generatingThread = SDL_CreateThread(mazeGeneration, "Generating", NULL);
+                        thread = SDL_CreateThread(mazeGeneration, "Generating", NULL);
                     }
-                    generate = SDL_FALSE;
                     continue;
                 case SDL_BUTTON_LEFT:
                     if (solve)
-                        solvingThread = SDL_CreateThread(mazeSolving, "Solving", NULL);
-                    solve = SDL_FALSE;
+                        thread = SDL_CreateThread(mazeSolving, "Solving", NULL);
                     continue;
                 }
             case SDL_QUIT:

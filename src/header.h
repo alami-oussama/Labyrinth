@@ -38,8 +38,8 @@ typedef struct _queue
 extern SDL_Renderer *renderer;
 extern SDL_bool visited[grid_width + 2][grid_height + 2];
 extern SDL_bool adjacencyMatrix[nbOfCells][nbOfCells];
-extern SDL_bool solve;
 extern SDL_bool generate;
+extern SDL_bool solve;
 
 /* Prototypes of functions */
 /***** Initialize the grid *****/
