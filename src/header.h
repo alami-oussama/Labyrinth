@@ -38,10 +38,12 @@ typedef struct _queue
 extern SDL_Renderer *renderer;
 extern SDL_bool visited[grid_width + 2][grid_height + 2];
 extern SDL_bool adjacencyMatrix[nbOfCells][nbOfCells];
+extern SDL_bool solve;
+extern SDL_bool generate;
 
 /* Prototypes of functions */
 /***** Maze generation *****/
-void mazeGeneration();
+int mazeGeneration(void *ptr);
 void push_stack(cell *Cell);
 cell *pop_stack();
 cell *cellNeighbour(cell *Cell);
@@ -49,7 +51,7 @@ void removeWall(cell *Cell, cell *neighbour);
 /***** Maze solving *****/
 void adjacency(cell *Cell, cell *cellNeighbour);
 SDL_bool isAdjacency(cell *Cell, cell *cellNeighbour);
-void mazeSolving();
+int mazeSolving(void *ptr);
 void enqueue(cell *Cell);
 cell *dequeue();
 void queueCellNeighbours(cell *Cell);

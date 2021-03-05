@@ -6,6 +6,7 @@
 static queue *firstCell;
 SDL_bool adjacencyMatrix[nbOfCells][nbOfCells];
 cell *parent[grid_width][grid_height];
+SDL_bool generate;
 
 void initBFS()
 {
@@ -19,7 +20,7 @@ void initBFS()
     visited[1][1] = SDL_TRUE;
 }
 
-void mazeSolving()
+int mazeSolving(void *ptr)
 {
     initBFS();
     cell *Cell = Malloc(cell);
@@ -32,6 +33,7 @@ void mazeSolving()
         queueCellNeighbours(Cell);
     }
     shortPath();
+    generate = SDL_TRUE;
 }
 
 void queueCellNeighbours(cell *Cell)

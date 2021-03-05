@@ -1,8 +1,44 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_thread.h>
 #include "header.h"
 
 /* Global varibales */
 SDL_Renderer *renderer;
+
+void initGrid()
+{
+    SDL_SetRenderDrawColor(renderer, 22, 22, 22, 255);
+    SDL_RenderClear(renderer);
+
+    SDL_SetRenderDrawColor(renderer, 210, 210, 210, 255);
+    for (int x = 0; x < window_width; x += grid_cell_size)
+        SDL_RenderDrawLine(renderer, x, 0, x, window_height);
+
+    for (int y = 0; y < window_height; y += grid_cell_size)
+        SDL_RenderDrawLine(renderer, 0, y, window_width, y);
+
+    /***** Starting cell *****/
+    SDL_Rect startingCell;
+    startingCell.x = grid_cell_size / 4;
+    startingCell.y = grid_cell_size / 4;
+    startingCell.w = grid_cell_size / 2;
+    startingCell.h = grid_cell_size / 2;
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_RenderFillRect(renderer, &startingCell);
+    SDL_RenderDrawRect(renderer, &startingCell);
+
+    /***** Terminal cell *****/
+    SDL_Rect terminalCell;
+    terminalCell.x = ((grid_width - 1) * grid_cell_size) + grid_cell_size / 4;
+    terminalCell.y = ((grid_height - 1) * grid_cell_size) + grid_cell_size / 4;
+    terminalCell.w = grid_cell_size / 2;
+    terminalCell.h = grid_cell_size / 2;
+
+    SDL_RenderFillRect(renderer, &terminalCell);
+    SDL_RenderDrawRect(renderer, &terminalCell);
+    SDL_RenderPresent(renderer);
+}
 
 int main(int argc, char *argv[])
 {
@@ -16,29 +52,34 @@ int main(int argc, char *argv[])
     SDL_SetWindowTitle(window, "Labyrinth");
 
     SDL_bool quit = SDL_FALSE;
-    SDL_bool firstLook = SDL_TRUE;
+    solve = SDL_FALSE;
+    generate = SDL_TRUE;
 
+    initGrid();
+    SDL_Thread *generatingThread;
+    SDL_Thread *solvingThread;
     while (!quit)
     {
         SDL_Event event;
-        if (SDL_PollEvent(&event))
+        if (SDL_WaitEvent(&event))
         {
-            if (firstLook)
-            {
-                mazeGeneration();
-                firstLook = SDL_FALSE;
-                continue;
-            }
             switch (event.type)
             {
             case SDL_MOUSEBUTTONDOWN:
                 switch (event.button.button)
                 {
                 case SDL_BUTTON_RIGHT:
-                    mazeGeneration();
+                    if (generate)
+                    {
+                        initGrid();
+                        generatingThread = SDL_CreateThread(mazeGeneration, "Generating", NULL);
+                    }
+                    generate = SDL_FALSE;
                     continue;
                 case SDL_BUTTON_LEFT:
-                    mazeSolving();
+                    if (solve)
+                        solvingThread = SDL_CreateThread(mazeSolving, "Solving", NULL);
+                    solve = SDL_FALSE;
                     continue;
                 }
             case SDL_QUIT:
