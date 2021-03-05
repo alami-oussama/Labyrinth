@@ -42,6 +42,8 @@ extern SDL_bool solve;
 extern SDL_bool generate;
 
 /* Prototypes of functions */
+/***** Initialize the grid *****/
+void initGrid();
 /***** Maze generation *****/
 int mazeGeneration(void *ptr);
 void push_stack(cell *Cell);
