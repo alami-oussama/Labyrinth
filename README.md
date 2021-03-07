@@ -12,7 +12,7 @@
 
 ![Maze sloving](screenshots/Maze-solving.gif)
 
-# SDL instalation
+# SDL2 instalation
 ## Linux instalation
 - Run the following commands: (for ubuntu)
   - sudo apt update (update packages list)
